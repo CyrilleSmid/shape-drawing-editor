@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="Background">#f0f6ec</SolidColorBrush>
+    <SolidColorBrush x:Key="TabBackground">#fbfcfa</SolidColorBrush>
+    <SolidColorBrush x:Key="Foreground">#37352f</SolidColorBrush>
+    <SolidColorBrush x:Key="GreyForeground">#8C8C88</SolidColorBrush>
+    <SolidColorBrush x:Key="Accent">#6BB5FF</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentBackground">#e7f3f8</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentNegative">#c8bfe7</SolidColorBrush>
+    
+    <SolidColorBrush x:Key="Border">#e2e8de</SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollBar">#e2e8de</SolidColorBrush>
+</ResourceDictionary>
