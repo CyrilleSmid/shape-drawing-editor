@@ -78,5 +78,17 @@ namespace oop_lab6.ViewModels
                 }
             }
         }
+        public void ShiftSelectedShapes(int shiftX, int shiftY)
+        {
+            for (ShapeContainer.First();
+                 ShapeContainer.IsEOL() == false;
+                 ShapeContainer.Next())
+            {
+                if (ShapeContainer.GetCurrent().Selected)
+                {
+                    ShapeContainer.GetCurrent().ShiftPos(shiftX, shiftY);
+                }
+            }
+        }
     }
 }

@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using oop_lab6.ViewModels;
 
 namespace oop_lab6
 {
@@ -53,22 +52,48 @@ namespace oop_lab6
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                ViewModel.DeselectAll();
-                ViewModel.AddShape(
-                    (int)e.GetPosition(canvas).X, 
-                    (int)e.GetPosition(canvas).Y,
-                    (MainWindowViewModel.Shapes)shapesComboBox.SelectedIndex);
-                DrawShapes();
+                if (Keyboard.IsKeyDown(Key.LeftShift))
+                {
+                    dragging = true;
+                    draggingFrom = e.GetPosition(canvas);
+                }
+                else
+                {
+                    ViewModel.DeselectAll();
+                    ViewModel.AddShape(
+                        (int)e.GetPosition(canvas).X,
+                        (int)e.GetPosition(canvas).Y,
+                        (MainWindowViewModel.Shapes)shapesComboBox.SelectedIndex);
+                    DrawShapes();
+                }
             }
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                if(Keyboard.IsKeyDown(Key.LeftCtrl) == false)
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) == false)
                 {
                     ViewModel.DeselectAll();
                 }
                 ViewModel.SelectShapeAt(
                     (int)e.GetPosition(canvas).X,
                     (int)e.GetPosition(canvas).Y);
+                DrawShapes();
+            }
+        }
+        private bool dragging = false;
+        private System.Windows.Point draggingFrom = new System.Windows.Point();
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            dragging = false;
+        }
+        private void canvasImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(dragging && e.LeftButton == MouseButtonState.Pressed)
+            {
+                System.Windows.Point currentMousePos = e.GetPosition(canvas);
+                ViewModel.ShiftSelectedShapes(
+                    (int)(currentMousePos.X - draggingFrom.X), 
+                    (int)(currentMousePos.Y - draggingFrom.Y));
+                draggingFrom = currentMousePos;
                 DrawShapes();
             }
         }
@@ -123,6 +148,5 @@ namespace oop_lab6
                 resourceColor.Color.G,
                 resourceColor.Color.B);
         }
-
     }
 }

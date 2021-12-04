@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:oop_lab6"
         mc:Ignorable="d" 
         Height="600" Width="1000" MinHeight="300" MinWidth="500"
-        KeyUp="window_KeyUp" Loaded="Window_Loaded">
+        KeyUp="window_KeyUp" Loaded="Window_Loaded" MouseUp="Window_MouseUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,7 +24,7 @@
             <Canvas x:Name="canvas" SizeChanged="canvas_SizeChanged" >
                 <Image x:Name="canvasImage" 
                        Loaded="canvasImage_Loaded" 
-                       MouseDown="canvasImage_MouseDown"/>
+                       MouseDown="canvasImage_MouseDown" MouseMove="canvasImage_MouseMove"/>
             </Canvas>
         </Border>
 

@@ -23,6 +23,12 @@ namespace oop_lab6.Models
 
         public abstract bool IfInside(int posX, int posY);
 
+        public void ShiftPos(int shiftX, int shiftY)
+        {
+            x = x + shiftX;
+            y = y + shiftY;
+        }
+
         public void SwitchSelection()
         {
             Selected = Selected ? false : true;
