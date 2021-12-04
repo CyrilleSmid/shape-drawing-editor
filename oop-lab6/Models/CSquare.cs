@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -8,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace oop_lab6.Models
 {
-    public class CCircle : CShape
+    internal class CSquare : CShape
     {
         private const int size = 16;
-            
-        public CCircle(int posX, int posY)
+        public CSquare(int posX, int posY)
         {
             x = posX;
             y = posY;
@@ -23,18 +21,20 @@ namespace oop_lab6.Models
             using (var defaultPen = new System.Drawing.Pen(color, thickness))
             using (var selectedPen = new System.Drawing.Pen(highlightColor, thickness))
             {
-               gfx.DrawEllipse(Selected ? selectedPen : defaultPen,
-               x - size,
-               y - size,
-               size * 2,
-               size * 2);
+                gfx.DrawRectangle(Selected ? selectedPen : defaultPen,
+                x - size / 2,
+                y - size / 2,
+                size,
+                size);
             }
-               
+
         }
 
-        public override bool IfInside(int posX, int posY) 
-{
-            return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= size;
+        public override bool IfInside(int posX, int posY)
+        {
+            return Math.Abs(x - posX) <= size / 2 && Math.Abs(y - posY) <= size / 2;
         }
+
+
     }
 }
