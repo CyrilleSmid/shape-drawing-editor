@@ -16,16 +16,36 @@ namespace oop_lab6.ViewModels
             View = view;
         }
 
-        Container<CCircle> _shapeContainer = new Container<CCircle>();
-        public Container<CCircle> ShapeContainer { get { return _shapeContainer; } }
+        Container<CShape> _shapeContainer = new Container<CShape>();
+        public Container<CShape> ShapeContainer { get { return _shapeContainer; } }
 
-        public void AddCircle(int posX, int posY)
-        {
-            CCircle circle = new CCircle(posX, posY);
-            circle.Selected = true;
-            ShapeContainer.Append(circle);
+        public enum Shapes
+        { 
+            Circle,
+            Square,
+            Triangle
         }
-        public void SelectCircleAt(int posX, int posY)
+
+        public void AddShape(int posX, int posY, Shapes shapeType)
+        {
+            CShape shape;
+            switch(shapeType)
+            {
+                case Shapes.Square:
+                    shape = new CSquare(posX, posY);
+                    break;
+                case Shapes.Triangle:
+                    shape = new CTriangle(posX, posY);
+                    break;
+                default:
+                    shape = new CCircle(posX, posY);
+                    break;
+            }
+            
+            shape.Selected = true;
+            ShapeContainer.Append(shape);
+        }
+        public void SelectShapeAt(int posX, int posY)
         {
             for (ShapeContainer.First();
                  ShapeContainer.IsEOL() == false;

@@ -10,8 +10,6 @@ namespace oop_lab6.Models
 {
     public class CCircle : CShape
     {
-        private const int size = 16;
-            
         public CCircle(int posX, int posY)
         {
             x = posX;

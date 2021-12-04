@@ -63,6 +63,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\CShape.cs" />
     <Compile Include="Models\CSquare.cs" />
+    <Compile Include="Models\CTriangle.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

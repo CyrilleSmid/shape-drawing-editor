@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:oop_lab6"
         mc:Ignorable="d" 
         Height="600" Width="1000" MinHeight="300" MinWidth="500"
-        KeyUp="window_KeyUp">
+        KeyUp="window_KeyUp" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -32,7 +32,7 @@
                     BorderThickness="1" BorderBrush="{StaticResource Border}"
                     Margin="0,0,20,20" Padding="10">
             <StackPanel>
-                
+                <ComboBox x:Name="shapesComboBox"/>
             </StackPanel>
         </Border>
     </Grid>

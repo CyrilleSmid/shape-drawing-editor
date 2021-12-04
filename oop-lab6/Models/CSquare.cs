@@ -9,9 +9,9 @@ namespace oop_lab6.Models
 {
     internal class CSquare : CShape
     {
-        private const int size = 16;
         public CSquare(int posX, int posY)
         {
+            size = (int)(size * 0.9);
             x = posX;
             y = posY;
         }
@@ -22,17 +22,17 @@ namespace oop_lab6.Models
             using (var selectedPen = new System.Drawing.Pen(highlightColor, thickness))
             {
                 gfx.DrawRectangle(Selected ? selectedPen : defaultPen,
-                x - size / 2,
-                y - size / 2,
-                size,
-                size);
+                x - size,
+                y - size,
+                size * 2,
+                size * 2);
             }
 
         }
 
         public override bool IfInside(int posX, int posY)
         {
-            return Math.Abs(x - posX) <= size / 2 && Math.Abs(y - posY) <= size / 2;
+            return Math.Abs(x - posX) <= size && Math.Abs(y - posY) <= size;
         }
 
 

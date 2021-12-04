@@ -9,7 +9,6 @@ namespace oop_lab6.Models
 {
     internal class CTriangle : CShape
     {
-        private const int size = 16;
         public CTriangle(int posX, int posY)
         {
             x = posX;
@@ -35,7 +34,7 @@ namespace oop_lab6.Models
 
         public override bool IfInside(int posX, int posY)
         {
-            return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= radius;
+            return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= size;
         }
     }
 }

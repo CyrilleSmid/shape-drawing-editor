@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using oop_lab6.ViewModels;
 
 namespace oop_lab6
 {
@@ -29,10 +30,14 @@ namespace oop_lab6
         {
             ViewModel = new MainWindowViewModel(this);
             DataContext = ViewModel;
-            defaultCircleColor = getRecourceAsColor("Foreground");
-            selectedCircleColor = getRecourceAsColor("Accent");
 
             InitializeComponent();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            shapesComboBox.ItemsSource = 
+                Enum.GetValues(typeof(MainWindowViewModel.Shapes)).Cast<MainWindowViewModel.Shapes>();
+            shapesComboBox.SelectedIndex = 0;
         }
 
         private void canvasImage_Loaded(object sender, RoutedEventArgs e)
@@ -49,9 +54,10 @@ namespace oop_lab6
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 ViewModel.DeselectAll();
-                ViewModel.AddCircle(
+                ViewModel.AddShape(
                     (int)e.GetPosition(canvas).X, 
-                    (int)e.GetPosition(canvas).Y);
+                    (int)e.GetPosition(canvas).Y,
+                    (MainWindowViewModel.Shapes)shapesComboBox.SelectedIndex);
                 DrawShapes();
             }
             else if (e.RightButton == MouseButtonState.Pressed)
@@ -60,7 +66,7 @@ namespace oop_lab6
                 {
                     ViewModel.DeselectAll();
                 }
-                ViewModel.SelectCircleAt(
+                ViewModel.SelectShapeAt(
                     (int)e.GetPosition(canvas).X,
                     (int)e.GetPosition(canvas).Y);
                 DrawShapes();
@@ -75,14 +81,10 @@ namespace oop_lab6
             }
         }
 
-        System.Drawing.Color defaultCircleColor;
-        System.Drawing.Color selectedCircleColor;
         void DrawShapes()
         {
             using (var bmp = new Bitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight))
             using (var gfx = Graphics.FromImage(bmp))
-            using (var defaultPen = new System.Drawing.Pen(defaultCircleColor, 5))
-            using (var selectedPen = new System.Drawing.Pen(selectedCircleColor, 5))
             {
                 gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 gfx.Clear(System.Drawing.Color.Transparent);
@@ -90,7 +92,7 @@ namespace oop_lab6
                     ViewModel.ShapeContainer.IsEOL() == false; 
                     ViewModel.ShapeContainer.Next())
                 {
-                    //ViewModel.ShapeContainer.GetCurrent().DrawItself(gfx, defaultPen, selectedPen);
+                    ViewModel.ShapeContainer.GetCurrent().DrawItself(gfx);
                 }
                 canvasImage.Source = BmpImageFromBmp(bmp);
             }
@@ -121,5 +123,6 @@ namespace oop_lab6
                 resourceColor.Color.G,
                 resourceColor.Color.B);
         }
+
     }
 }
