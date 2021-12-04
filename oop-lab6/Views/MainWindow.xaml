@@ -32,18 +32,7 @@
                     BorderThickness="1" BorderBrush="{StaticResource Border}"
                     Margin="0,0,20,20" Padding="10">
             <StackPanel>
-                <TextBlock TextWrapping="Wrap">
-                - Press right mouse button to create a circle
-                </TextBlock>
-                <TextBlock TextWrapping="Wrap">
-                - Press left mouse button on a circle to select it
-                </TextBlock>
-                <TextBlock TextWrapping="Wrap">
-                - Press left mouse button while holding Ctrl to select multiple circles
-                </TextBlock>
-                <TextBlock TextWrapping="Wrap">
-                - Press Del to delete selected circles
-                </TextBlock>
+                
             </StackPanel>
         </Border>
     </Grid>

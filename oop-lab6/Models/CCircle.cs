@@ -5,12 +5,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using oop_lab6.Models;
 
 namespace oop_lab6.Models
 {
-    public class CCircle
+    public class CCircle : CShape
     {
-        private int x, y;
         private const int radius = 15;
         public bool Selected { get; set; }
             
@@ -20,26 +20,27 @@ namespace oop_lab6.Models
             y = posY;
         }
 
-        public void DrawItself(
-            Graphics gfx,
-            System.Drawing.Pen defaultPen,
-            System.Drawing.Pen selectedPen)
+        public override void DrawItself(Graphics gfx)
         {
-            //Debug.WriteLine("CCircle.DrawItself()");
-            gfx.DrawEllipse(Selected ? selectedPen : defaultPen,
-                x - radius,
-                y - radius,
-                radius * 2,
-                radius * 2);
+            using (var defaultPen = new System.Drawing.Pen(color, thickness))
+            using (var selectedPen = new System.Drawing.Pen(highlightColor, thickness))
+            {
+               gfx.DrawEllipse(Selected ? selectedPen : defaultPen,
+               x - radius,
+               y - radius,
+               radius * 2,
+               radius * 2);
+            }
+               
         }
 
-        public bool IfInside(int posX, int posY)
-        {
+        public override bool IfInside(int posX, int posY) 
+{
             return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= radius;
         }
 
-        public void SwitchSelection()
-        {
+        public override void SwitchSelection()
+{
             Selected = Selected ? false : true;
         }
     }
