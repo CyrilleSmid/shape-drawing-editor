@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:oop_lab6"
         mc:Ignorable="d" 
-        Height="600" Width="1000" MinHeight="300" MinWidth="500"
+        Height="600" Width="1000" MinHeight="600" MinWidth="780"
         KeyUp="window_KeyUp" Loaded="Window_Loaded" 
         MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave">
     <Grid>
@@ -22,7 +22,7 @@
         <Border Background="{StaticResource TabBackground}" CornerRadius="8" Grid.Row="1" 
                     BorderThickness="1" BorderBrush="{StaticResource Border}"
                     Margin="20,0,20,20">
-            <Canvas x:Name="canvas" SizeChanged="canvas_SizeChanged" >
+            <Canvas x:Name="canvas" SizeChanged="canvas_SizeChanged">
                 <Image x:Name="canvasImage" 
                        Loaded="canvasImage_Loaded" 
                        MouseDown="canvasImage_MouseDown"/>

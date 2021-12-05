@@ -39,7 +39,7 @@ namespace oop_lab6.ViewModels
                         (int)View.GetCurentCanvasSize().Y);
                     break;
                 case Shapes.Triangle:
-                    shape = new CTriangle(posX, posY,
+                    shape = new CEquilateralTriangle(posX, posY,
                         (int)View.GetCurentCanvasSize().X,
                         (int)View.GetCurentCanvasSize().Y);
                     break;

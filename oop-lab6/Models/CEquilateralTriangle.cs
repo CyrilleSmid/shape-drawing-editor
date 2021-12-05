@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace oop_lab6.Models
 {
-    internal class CTriangle : CShape
+    internal class CEquilateralTriangle : CShape
     {
-        public CTriangle(int posX, int posY, int borderX, int borderY) 
+        public CEquilateralTriangle(int posX, int posY, int borderX, int borderY) 
             : base(posX, posY, borderX, borderY) { }
 
         protected override void SetBoundedPos(int posX, int posY, int borderX, int borderY) 
@@ -40,7 +40,7 @@ namespace oop_lab6.Models
 
         public override bool IfInside(int posX, int posY)
         {
-            return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= size;
+            return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= size * 0.7;
         }
     }
 }

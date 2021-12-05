@@ -98,7 +98,6 @@ namespace oop_lab6
         {
             dragging = false;
         }
-        private const int minimalDraggingShift = 2;
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if(dragging && e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftShift))
@@ -106,13 +105,10 @@ namespace oop_lab6
                 System.Windows.Point currentMousePos = e.GetPosition(canvas);
                 int shiftX = (int)(currentMousePos.X - draggingFrom.X);
                 int shiftY = (int)(currentMousePos.Y - draggingFrom.Y);
-                if(Math.Abs(shiftX) > minimalDraggingShift || Math.Abs(shiftY) > minimalDraggingShift)
-                {
-                    ViewModel.ShiftSelectedShapes(shiftX, shiftY);
-                    draggingFrom = currentMousePos;
-                    Debug.WriteLine($"Dragging({shiftX}, {shiftY})");
-                    DrawShapes();
-                }
+                ViewModel.ShiftSelectedShapes(shiftX, shiftY);
+                draggingFrom = currentMousePos;
+                Debug.WriteLine($"Dragging({shiftX}, {shiftY})");
+                DrawShapes();
             }
         }
         private void window_KeyUp(object sender, KeyEventArgs e)
