@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Windows;
 using System.Diagnostics;
 
-namespace oop_lab6.Models
+namespace oop_lab6_8.Models
 {
     public abstract class CShape
     {

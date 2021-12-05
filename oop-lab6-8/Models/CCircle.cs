@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace oop_lab6.Models
+namespace oop_lab6_8.Models
 {
     public class CCircle : CShape
     {

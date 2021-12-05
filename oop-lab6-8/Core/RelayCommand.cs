@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace oop_lab6.Core
+namespace oop_lab6_8.Core
 {
     internal class RelayCommand : ICommand
     {

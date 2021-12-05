@@ -1,4 +1,4 @@
-﻿using oop_lab6.ViewModels;
+﻿using oop_lab6_8.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace oop_lab6
+namespace oop_lab6_8
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CDCDC99E-751A-456C-9A7A-012DCBA8721D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>oop_lab6</RootNamespace>
+    <RootNamespace>oop_lab6_8</RootNamespace>
     <AssemblyName>wpf_mvvm_template</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,14 +1,14 @@
-﻿using oop_lab6.Core;
+﻿using oop_lab6_8.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using oop_lab6.Models;
+using oop_lab6_8.Models;
 using System.Diagnostics;
 
 
-namespace oop_lab6.ViewModels
+namespace oop_lab6_8.ViewModels
 {
     public class MainWindowViewModel : ObservableObject
     {

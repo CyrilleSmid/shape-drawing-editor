@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace oop_lab6.Core
+namespace oop_lab6_8.Core
 {
     public class ObservableObject : INotifyPropertyChanged
     {
