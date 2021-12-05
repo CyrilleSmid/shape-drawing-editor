@@ -52,6 +52,12 @@
                         Maximum="255" Foreground="{StaticResource Green}" Margin="0,0,0,10"/>
                 <Slider x:Name="blueSlider" Value="{Binding ShapeColorBlue, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
                         Maximum="255" Foreground="{StaticResource Blue}" Margin="0,0,0,10"/>
+                <TextBlock TextWrapping="Wrap" FontSize="16">
+                    - Hold Left Ctrl to select multiple shapes
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" FontSize="16">
+                    - Hold Left Shift to move selected shapes
+                </TextBlock>
             </StackPanel>
         </Border>
     </Grid>
