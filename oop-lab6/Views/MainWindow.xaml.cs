@@ -42,6 +42,7 @@ namespace oop_lab6
         private void canvasImage_Loaded(object sender, RoutedEventArgs e)
         {
             DrawShapes();
+            ViewModel.MaxSize = (int)(Math.Min(canvas.ActualWidth, canvas.ActualHeight) / 2 - ViewModel.ShapeThickness);
         }
 
         public System.Windows.Point GetCurentCanvasSize()
@@ -52,6 +53,7 @@ namespace oop_lab6
         }
         private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            ViewModel.CanvasSizeChanged();
             DrawShapes();
         }
 
@@ -101,7 +103,7 @@ namespace oop_lab6
             if(dragging && e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftShift))
             {
                 System.Windows.Point currentMousePos = e.GetPosition(canvas);
-                Debug.WriteLine($"Dragging({(int)(currentMousePos.X - draggingFrom.X)}, {(int)(currentMousePos.Y - draggingFrom.Y)}");
+                Debug.WriteLine($"Dragging({(int)(currentMousePos.X - draggingFrom.X)}, {(int)(currentMousePos.Y - draggingFrom.Y)})");
                 ViewModel.ShiftSelectedShapes(
                     (int)(currentMousePos.X - draggingFrom.X), 
                     (int)(currentMousePos.Y - draggingFrom.Y));
@@ -118,20 +120,37 @@ namespace oop_lab6
             }
         }
 
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                ViewModel.ResizeSelectedShapes();
+                DrawShapes();
+            }
+        }
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ViewModel.ResizeSelectedShapes();
+            DrawShapes();
+        }
+
         void DrawShapes()
         {
-            using (var bmp = new Bitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight))
-            using (var gfx = Graphics.FromImage(bmp))
+            if(canvas.IsLoaded)
             {
-                gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                gfx.Clear(System.Drawing.Color.Transparent);
-                for(ViewModel.ShapeContainer.First(); 
-                    ViewModel.ShapeContainer.IsEOL() == false; 
-                    ViewModel.ShapeContainer.Next())
+                using (var bmp = new Bitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight))
+                using (var gfx = Graphics.FromImage(bmp))
                 {
-                    ViewModel.ShapeContainer.GetCurrent().DrawItself(gfx);
+                    gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    gfx.Clear(System.Drawing.Color.Transparent);
+                    for (ViewModel.ShapeContainer.First();
+                        ViewModel.ShapeContainer.IsEOL() == false;
+                        ViewModel.ShapeContainer.Next())
+                    {
+                        ViewModel.ShapeContainer.GetCurrent().DrawItself(gfx);
+                    }
+                    canvasImage.Source = BmpImageFromBmp(bmp);
                 }
-                canvasImage.Source = BmpImageFromBmp(bmp);
             }
         }
         private BitmapImage BmpImageFromBmp(Bitmap bmp)
@@ -159,11 +178,6 @@ namespace oop_lab6
                 resourceColor.Color.R,
                 resourceColor.Color.G,
                 resourceColor.Color.B);
-        }
-
-        public void UpdatePaintBox() // TODO use subsribe to OnPropertyChanged event
-        {
-            DrawShapes();
         }
     }
 }

@@ -50,6 +50,7 @@ namespace oop_lab6.ViewModels
             }
             
             shape.Selected = true;
+            SelectedSize = shape.Size;
             ShapeContainer.Append(shape);
         }
         public void SelectShapeAt(int posX, int posY)
@@ -63,6 +64,27 @@ namespace oop_lab6.ViewModels
                     ShapeContainer.GetCurrent().SwitchSelection();
                 }
             }
+            UpdateSelectedSizeIfOneShapeIsSelected();
+        }
+        private void UpdateSelectedSizeIfOneShapeIsSelected()
+        {
+            bool anySelected = false;
+            int newSelectedSize = 0;
+            for (ShapeContainer.First();
+                 ShapeContainer.IsEOL() == false;
+                 ShapeContainer.Next())
+            {
+                if(ShapeContainer.GetCurrent().Selected)
+                {
+                    if(anySelected)
+                    {
+                        return;
+                    }
+                    anySelected = true;
+                    newSelectedSize = ShapeContainer.GetCurrent().Size;
+                }
+            }
+            SelectedSize = newSelectedSize;
         }
         public void DeselectAllShapes()
         {
@@ -102,29 +124,36 @@ namespace oop_lab6.ViewModels
         }
 
         private const int minSize = 10;
-        private const int maxSize = 100;
+        private int maxSize;
         public int MinSize { get { return minSize; } }
-        public int MaxSize { get { return maxSize; } }
+        public int ShapeThickness { get { return CShape.Thickness; } }
+        public int MaxSize 
+        { 
+            get { return maxSize; } 
+            set 
+            { 
+                maxSize = value;
+                OnPropertyChanged();
+            } 
+        }
 
-        private int _size = 20;
-        public int Size
+        private int _selectedSize = 20;
+        public int SelectedSize
         {
-            get { return _size; }
+            get { return _selectedSize; }
             set 
             {
                 value = Math.Min(Math.Max(minSize, value), maxSize);
-                if(_size != value)
+                if(_selectedSize != value)
                 {
-                    Debug.WriteLine($"Size = {value}");
-                    _size = value;
-                    ResizeSelectedShapes();
-                    View.UpdatePaintBox();
+                    //Debug.WriteLine($"Size = {value}");
+                    _selectedSize = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private void ResizeSelectedShapes()
+        public void ResizeSelectedShapes()
         {
             for (ShapeContainer.First();
                  ShapeContainer.IsEOL() == false;
@@ -133,10 +162,21 @@ namespace oop_lab6.ViewModels
                 if (ShapeContainer.GetCurrent().Selected)
                 {
                     ShapeContainer.GetCurrent().Resize(
-                        Size,
+                        SelectedSize,
                         (int)View.GetCurentCanvasSize().X,
                         (int)View.GetCurentCanvasSize().Y);
                 }
+            }
+        }
+        public void CanvasSizeChanged()
+        {
+            for (ShapeContainer.First();
+                 ShapeContainer.IsEOL() == false;
+                 ShapeContainer.Next())
+            {
+                ShapeContainer.GetCurrent().FitNewCanvasSize(
+                    (int)View.GetCurentCanvasSize().X,
+                    (int)View.GetCurentCanvasSize().Y);
             }
         }
     }

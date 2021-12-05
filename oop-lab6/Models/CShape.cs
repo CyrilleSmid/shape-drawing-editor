@@ -23,7 +23,10 @@ namespace oop_lab6.Models
             y = Math.Min(Math.Max(size + thickness, posY), borderY - size - thickness);
         }
         protected int size = 20;
-        protected const int thickness = 6;
+        public int Size { get { return size; } }
+
+        protected static int thickness = 6;
+        public static int Thickness { get { return thickness; } }
 
         protected Color color = Color.FromArgb(55, 53, 47);
         protected Color highlightColor = Color.FromArgb(107, 181, 255);
@@ -41,7 +44,7 @@ namespace oop_lab6.Models
             x = x + shiftX;
             y = y + shiftY;
             SetBoundedPos(x, y, borderX, borderY);
-            Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
+            //Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
         }
 
         public void SwitchSelection()
@@ -53,6 +56,10 @@ namespace oop_lab6.Models
         {
             Debug.WriteLine($"CShape.Resize({size}, {borderX}, {borderY})");
             this.size = size;
+            SetBoundedPos(x, y, borderX, borderY);
+        }
+        public void FitNewCanvasSize(int borderX, int borderY)
+        {
             SetBoundedPos(x, y, borderX, borderY);
         }
     }

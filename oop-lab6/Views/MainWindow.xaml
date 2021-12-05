@@ -34,9 +34,15 @@
                     Margin="0,0,20,20" Padding="10">
             <StackPanel>
                 <ComboBox x:Name="shapesComboBox"/>
+                
                 <TextBlock Text="Size" Margin="0,20,0,0" />
-                <TextBox Text="{Binding Size, Mode=TwoWay}" Style="{StaticResource RoundedTextBox}" Margin="0,0,0,10"/>
-                <Slider Minimum="{Binding MinSize}" Maximum="{Binding MaxSize}" Value="{Binding Size, Mode=TwoWay}"/>
+                <TextBox Text="{Binding SelectedSize, Mode=TwoWay}" 
+                         Style="{StaticResource RoundedTextBox}" 
+                         Margin="0,0,0,10" 
+                         KeyDown="TextBox_KeyDown"/>
+                <Slider Minimum="{Binding MinSize}" Maximum="{Binding MaxSize}" 
+                        Value="{Binding SelectedSize, Mode=TwoWay}" 
+                        ValueChanged="Slider_ValueChanged"/>
             </StackPanel>
         </Border>
     </Grid>
