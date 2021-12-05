@@ -36,13 +36,22 @@
                 <ComboBox x:Name="shapesComboBox"/>
                 
                 <TextBlock Text="Size" Margin="0,20,0,0" />
-                <TextBox Text="{Binding SelectedSize, Mode=TwoWay}" 
+                <!--<TextBox Text="{Binding SelectedSize, Mode=TwoWay}" 
                          Style="{StaticResource RoundedTextBox}" 
                          Margin="0,0,0,10" 
-                         KeyDown="TextBox_KeyDown"/>
+                         KeyDown="TextBox_KeyDown"/>-->
                 <Slider Minimum="{Binding MinSize}" Maximum="{Binding MaxSize}" 
-                        Value="{Binding SelectedSize, Mode=TwoWay}" 
-                        ValueChanged="Slider_ValueChanged"/>
+                        Value="{Binding SelectedShapeSize, Mode=TwoWay}" 
+                        ValueChanged="resizeSlider_ValueChanged"/>
+                <TextBlock Text="Color" Margin="0,20,0,0" />
+                <Slider x:Name="alphaSlider" Value="{Binding ShapeColorAlpha, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
+                        Maximum="255" Foreground="{StaticResource GreyForeground}" Margin="0,0,0,10"/>
+                <Slider x:Name="redSlider" Value="{Binding ShapeColorRed, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
+                        Maximum="255" Foreground="{StaticResource Red}" Margin="0,0,0,10"/>
+                <Slider x:Name="greenSlider" Value="{Binding ShapeColorGreen, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
+                        Maximum="255" Foreground="{StaticResource Green}" Margin="0,0,0,10"/>
+                <Slider x:Name="blueSlider" Value="{Binding ShapeColorBlue, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
+                        Maximum="255" Foreground="{StaticResource Blue}" Margin="0,0,0,10"/>
             </StackPanel>
         </Border>
     </Grid>

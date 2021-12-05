@@ -16,7 +16,13 @@ namespace oop_lab6.Models
         {
             using (var defaultPen = new System.Drawing.Pen(color, thickness))
             using (var selectedPen = new System.Drawing.Pen(highlightColor, thickness))
+            using (var brush = new SolidBrush(FillColor))
             {
+                gfx.FillRectangle(brush,
+                x - size,
+                y - size,
+                size * 2,
+                size * 2);
                 gfx.DrawRectangle(Selected ? selectedPen : defaultPen,
                 x - size,
                 y - size,

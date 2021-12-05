@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using oop_lab6.Models;
 using System.Diagnostics;
 
+
 namespace oop_lab6.ViewModels
 {
     public class MainWindowViewModel : ObservableObject
@@ -50,7 +51,13 @@ namespace oop_lab6.ViewModels
             }
             
             shape.Selected = true;
-            SelectedSize = shape.Size;
+            SelectedShapeSize = shape.Size;
+            SelectedShapeColor = System.Windows.Media.Color.FromArgb(
+                shape.FillColor.A,
+                shape.FillColor.R,
+                shape.FillColor.G,
+                shape.FillColor.B);
+
             ShapeContainer.Append(shape);
         }
         public void SelectShapeAt(int posX, int posY)
@@ -64,12 +71,13 @@ namespace oop_lab6.ViewModels
                     ShapeContainer.GetCurrent().SwitchSelection();
                 }
             }
-            UpdateSelectedSizeIfOneShapeIsSelected();
+            UpdateSelectedShape();
         }
-        private void UpdateSelectedSizeIfOneShapeIsSelected()
+        private void UpdateSelectedShape()
         {
             bool anySelected = false;
             int newSelectedSize = 0;
+            System.Drawing.Color newSelectedColor = new System.Drawing.Color();
             for (ShapeContainer.First();
                  ShapeContainer.IsEOL() == false;
                  ShapeContainer.Next())
@@ -82,9 +90,15 @@ namespace oop_lab6.ViewModels
                     }
                     anySelected = true;
                     newSelectedSize = ShapeContainer.GetCurrent().Size;
+                    newSelectedColor = ShapeContainer.GetCurrent().FillColor;
                 }
             }
-            SelectedSize = newSelectedSize;
+            SelectedShapeSize = newSelectedSize;
+            SelectedShapeColor = System.Windows.Media.Color.FromArgb(
+                newSelectedColor.A,
+                newSelectedColor.R,
+                newSelectedColor.G,
+                newSelectedColor.B);
         }
         public void DeselectAllShapes()
         {
@@ -138,7 +152,7 @@ namespace oop_lab6.ViewModels
         }
 
         private int _selectedSize = 20;
-        public int SelectedSize
+        public int SelectedShapeSize
         {
             get { return _selectedSize; }
             set 
@@ -162,7 +176,7 @@ namespace oop_lab6.ViewModels
                 if (ShapeContainer.GetCurrent().Selected)
                 {
                     ShapeContainer.GetCurrent().Resize(
-                        SelectedSize,
+                        SelectedShapeSize,
                         (int)View.GetCurentCanvasSize().X,
                         (int)View.GetCurentCanvasSize().Y);
                 }
@@ -177,6 +191,73 @@ namespace oop_lab6.ViewModels
                 ShapeContainer.GetCurrent().FitNewCanvasSize(
                     (int)View.GetCurentCanvasSize().X,
                     (int)View.GetCurentCanvasSize().Y);
+            }
+        }
+
+        private System.Windows.Media.Color _selectedShapeColor = new System.Windows.Media.Color();
+        private System.Windows.Media.Color SelectedShapeColor 
+        {
+            get { return _selectedShapeColor; }
+            set 
+            { 
+                _selectedShapeColor = value;
+                OnPropertyChanged(nameof(ShapeColorAlpha));
+                OnPropertyChanged(nameof(ShapeColorRed));
+                OnPropertyChanged(nameof(ShapeColorGreen));
+                OnPropertyChanged(nameof(ShapeColorBlue));
+            }
+        }
+        public byte ShapeColorAlpha
+        {
+            get { return SelectedShapeColor.A; }
+            set
+            {
+                _selectedShapeColor.A = value;
+                OnPropertyChanged();
+            }
+        }
+        public byte ShapeColorRed
+        {
+            get { return SelectedShapeColor.R; }
+            set
+            {
+                _selectedShapeColor.R = value;
+                OnPropertyChanged();
+            }
+        }
+        public byte ShapeColorGreen
+        {
+            get { return SelectedShapeColor.G; }
+            set
+            {
+                _selectedShapeColor.G = value;
+                OnPropertyChanged();
+            }
+        }
+        public byte ShapeColorBlue
+        {
+            get { return SelectedShapeColor.B; }
+            set
+            {
+                _selectedShapeColor.B = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void ChangeSelectedShapesColor()
+        {
+            for (ShapeContainer.First();
+                 ShapeContainer.IsEOL() == false;
+                 ShapeContainer.Next())
+            {
+                if (ShapeContainer.GetCurrent().Selected)
+                {
+                    ShapeContainer.GetCurrent().ChangeColor(System.Drawing.Color.FromArgb(
+                        SelectedShapeColor.A,
+                        SelectedShapeColor.R,
+                        SelectedShapeColor.G,
+                        SelectedShapeColor.B));
+                }
             }
         }
     }

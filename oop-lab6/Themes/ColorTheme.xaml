@@ -10,4 +10,8 @@
     
     <SolidColorBrush x:Key="Border">#e2e8de</SolidColorBrush>
     <SolidColorBrush x:Key="ScrollBar">#e2e8de</SolidColorBrush>
+
+    <SolidColorBrush x:Key="Red">#A64444</SolidColorBrush>
+    <SolidColorBrush x:Key="Green">#70B85D</SolidColorBrush>
+    <SolidColorBrush x:Key="Blue">#0FA0C1</SolidColorBrush>
 </ResourceDictionary>

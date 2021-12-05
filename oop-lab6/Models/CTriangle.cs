@@ -23,14 +23,16 @@ namespace oop_lab6.Models
         {
             using (var defaultPen = new System.Drawing.Pen(color, thickness))
             using (var selectedPen = new System.Drawing.Pen(highlightColor, thickness))
+            using (var brush = new SolidBrush(FillColor))
             {
                 int a = (int)(size * 2 / Math.Sqrt(3));
-                PointF[] triangleNodes = 
+                PointF[] triangleNodes =
                     {
                         new PointF(x, y + a),
                         new PointF(x - size, y - a / 2),
                         new PointF(x + size, y - a / 2)
                     };
+                gfx.FillPolygon(brush, triangleNodes);
                 gfx.DrawPolygon(Selected ? selectedPen : defaultPen, triangleNodes);
             }
 

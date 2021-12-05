@@ -98,17 +98,21 @@ namespace oop_lab6
         {
             dragging = false;
         }
+        private const int minimalDraggingShift = 2;
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if(dragging && e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftShift))
             {
                 System.Windows.Point currentMousePos = e.GetPosition(canvas);
-                Debug.WriteLine($"Dragging({(int)(currentMousePos.X - draggingFrom.X)}, {(int)(currentMousePos.Y - draggingFrom.Y)})");
-                ViewModel.ShiftSelectedShapes(
-                    (int)(currentMousePos.X - draggingFrom.X), 
-                    (int)(currentMousePos.Y - draggingFrom.Y));
-                draggingFrom = currentMousePos;
-                DrawShapes();
+                int shiftX = (int)(currentMousePos.X - draggingFrom.X);
+                int shiftY = (int)(currentMousePos.Y - draggingFrom.Y);
+                if(Math.Abs(shiftX) > minimalDraggingShift || Math.Abs(shiftY) > minimalDraggingShift)
+                {
+                    ViewModel.ShiftSelectedShapes(shiftX, shiftY);
+                    draggingFrom = currentMousePos;
+                    Debug.WriteLine($"Dragging({shiftX}, {shiftY})");
+                    DrawShapes();
+                }
             }
         }
         private void window_KeyUp(object sender, KeyEventArgs e)
@@ -128,9 +132,15 @@ namespace oop_lab6
                 DrawShapes();
             }
         }
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void resizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ViewModel.ResizeSelectedShapes();
+            DrawShapes();
+        }
+
+        private void colorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ViewModel.ChangeSelectedShapesColor();
             DrawShapes();
         }
 

@@ -30,6 +30,11 @@ namespace oop_lab6.Models
 
         protected Color color = Color.FromArgb(55, 53, 47);
         protected Color highlightColor = Color.FromArgb(107, 181, 255);
+        protected Color _fillColor = Color.FromArgb(0,0,0,0);
+        public Color FillColor {
+            get { return _fillColor; }
+            set { _fillColor = value; }
+        }
 
         public bool Selected { get; set; }
 
@@ -41,15 +46,16 @@ namespace oop_lab6.Models
             int shiftX, int shiftY, 
             int borderX, int borderY)
         {
+            Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
             x = x + shiftX;
             y = y + shiftY;
             SetBoundedPos(x, y, borderX, borderY);
-            //Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
         }
 
         public void SwitchSelection()
         {
             Selected = Selected ? false : true;
+            Debug.WriteLine($"CShape.SwitchSelection to {Selected}");
         }
 
         public void Resize(int size, int borderX, int borderY)
@@ -61,6 +67,12 @@ namespace oop_lab6.Models
         public void FitNewCanvasSize(int borderX, int borderY)
         {
             SetBoundedPos(x, y, borderX, borderY);
+        }
+
+        public void ChangeColor(Color newColor)
+        {
+            Debug.WriteLine($"CShape.ChangeColor()");
+            FillColor = newColor;
         }
     }
 }
