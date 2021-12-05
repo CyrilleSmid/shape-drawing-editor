@@ -62,6 +62,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\CShape.cs" />
+    <Compile Include="Models\CShapeGroup.cs" />
     <Compile Include="Models\CSquare.cs" />
     <Compile Include="Models\CEquilateralTriangle.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
