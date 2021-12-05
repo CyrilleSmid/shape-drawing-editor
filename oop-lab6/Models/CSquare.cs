@@ -9,12 +9,8 @@ namespace oop_lab6.Models
 {
     internal class CSquare : CShape
     {
-        public CSquare(int posX, int posY)
-        {
-            size = (int)(size * 0.9);
-            x = posX;
-            y = posY;
-        }
+        public CSquare(int posX, int posY, int borderX, int borderY)
+            : base(posX, posY, borderX, borderY) { }
 
         public override void DrawItself(Graphics gfx)
         {

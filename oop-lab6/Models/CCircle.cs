@@ -10,11 +10,8 @@ namespace oop_lab6.Models
 {
     public class CCircle : CShape
     {
-        public CCircle(int posX, int posY)
-        {
-            x = posX;
-            y = posY;
-        }
+        public CCircle(int posX, int posY, int borderX, int borderY)
+            : base(posX, posY, borderX, borderY) { }
 
         public override void DrawItself(Graphics gfx)
         {

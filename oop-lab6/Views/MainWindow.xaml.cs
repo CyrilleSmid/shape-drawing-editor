@@ -43,6 +43,13 @@ namespace oop_lab6
         {
             DrawShapes();
         }
+
+        public System.Windows.Point GetCurentCanvasSize()
+        {
+            return new System.Windows.Point(
+                (int)canvas.ActualWidth,
+                (int)canvas.ActualHeight);
+        }
         private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DrawShapes();
@@ -59,7 +66,7 @@ namespace oop_lab6
                 }
                 else
                 {
-                    ViewModel.DeselectAll();
+                    ViewModel.DeselectAllShapes();
                     ViewModel.AddShape(
                         (int)e.GetPosition(canvas).X,
                         (int)e.GetPosition(canvas).Y,
@@ -71,7 +78,7 @@ namespace oop_lab6
             {
                 if (Keyboard.IsKeyDown(Key.LeftCtrl) == false)
                 {
-                    ViewModel.DeselectAll();
+                    ViewModel.DeselectAllShapes();
                 }
                 ViewModel.SelectShapeAt(
                     (int)e.GetPosition(canvas).X,
@@ -85,11 +92,16 @@ namespace oop_lab6
         {
             dragging = false;
         }
-        private void canvasImage_MouseMove(object sender, MouseEventArgs e)
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            if(dragging && e.LeftButton == MouseButtonState.Pressed)
+            dragging = false;
+        }
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(dragging && e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftShift))
             {
                 System.Windows.Point currentMousePos = e.GetPosition(canvas);
+                Debug.WriteLine($"Dragging({(int)(currentMousePos.X - draggingFrom.X)}, {(int)(currentMousePos.Y - draggingFrom.Y)}");
                 ViewModel.ShiftSelectedShapes(
                     (int)(currentMousePos.X - draggingFrom.X), 
                     (int)(currentMousePos.Y - draggingFrom.Y));
@@ -101,7 +113,7 @@ namespace oop_lab6
         {
             if (e.Key == Key.Delete)
             {
-                ViewModel.DeleteSelected();
+                ViewModel.DeleteSelectedShapes();
                 DrawShapes();
             }
         }
@@ -147,6 +159,11 @@ namespace oop_lab6
                 resourceColor.Color.R,
                 resourceColor.Color.G,
                 resourceColor.Color.B);
+        }
+
+        public void UpdatePaintBox() // TODO use subsribe to OnPropertyChanged event
+        {
+            DrawShapes();
         }
     }
 }

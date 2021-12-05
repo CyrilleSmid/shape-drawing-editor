@@ -8,5 +8,8 @@ namespace oop_lab6.ViewModels
 {
     public interface IMainWindowView
     {
+        void UpdatePaintBox();
+
+        System.Windows.Point GetCurentCanvasSize();
     }
 }

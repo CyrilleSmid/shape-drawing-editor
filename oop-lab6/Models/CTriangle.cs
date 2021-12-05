@@ -9,10 +9,14 @@ namespace oop_lab6.Models
 {
     internal class CTriangle : CShape
     {
-        public CTriangle(int posX, int posY)
+        public CTriangle(int posX, int posY, int borderX, int borderY) 
+            : base(posX, posY, borderX, borderY) { }
+
+        protected override void SetBoundedPos(int posX, int posY, int borderX, int borderY) 
         {
-            x = posX;
-            y = posY;
+            int a = (int)(size * 2 / Math.Sqrt(3));
+            x = Math.Min(Math.Max(size + thickness, posX), borderX - size - thickness);
+            y = Math.Min(Math.Max(a / 2 + thickness, posY), borderY - a - thickness);
         }
 
         public override void DrawItself(Graphics gfx)
