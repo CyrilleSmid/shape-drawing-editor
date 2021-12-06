@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace oop_lab6_8.Models
 {
-    internal class CSquare : CShape
+    internal class CSquare : CBasicShape
     {
         public CSquare(int posX, int posY, int borderX, int borderY)
             : base(posX, posY, borderX, borderY) { }
@@ -36,7 +36,5 @@ namespace oop_lab6_8.Models
         {
             return Math.Abs(x - posX) <= size && Math.Abs(y - posY) <= size;
         }
-
-
     }
 }

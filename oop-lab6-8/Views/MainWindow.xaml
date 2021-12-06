@@ -52,6 +52,8 @@
                         Maximum="255" Foreground="{StaticResource Green}" Margin="0,0,0,10"/>
                 <Slider x:Name="blueSlider" Value="{Binding ShapeColorBlue, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
                         Maximum="255" Foreground="{StaticResource Blue}" Margin="0,0,0,10"/>
+                <Button HorizontalAlignment="Stretch" Content="Group selection" Margin="0,10"
+                        Click="GroupSelection_Click"/>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
                     - Hold Left Ctrl to select multiple shapes
                 </TextBlock>

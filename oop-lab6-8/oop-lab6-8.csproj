@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\CBasicShape.cs" />
     <Compile Include="Models\CShape.cs" />
     <Compile Include="Models\CShapeGroup.cs" />
     <Compile Include="Models\CSquare.cs" />
@@ -81,7 +82,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
-    <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Models\CCircle.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="ViewModels\IMainWindowView.cs" />

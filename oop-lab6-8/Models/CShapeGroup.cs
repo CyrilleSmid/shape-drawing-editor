@@ -9,30 +9,69 @@ namespace oop_lab6_8.Models
 {
     internal class CShapeGroup : CShape
     {
+        Container<CShape> shapeGroup = new Container<CShape>();
 
-        public CShapeGroup(int posX, int posY, int borderX, int borderY) : base(posX, posY, borderX, borderY)
+        public override Color FillColor
         {
+            get 
+            {
+                shapeGroup.First();
+                return shapeGroup.GetCurrent().FillColor;
+            }
+            set
+            {
+                for (shapeGroup.First();
+                   shapeGroup.IsEOL() == false;
+                   shapeGroup.Next())
+                {
+                    shapeGroup.GetCurrent().FillColor = value;
+                }
+            }
         }
 
-        Container<CShape> shapeContainer = new Container<CShape>();
+        private bool _selected = false;
+        public override bool Selected
+        {
+            get { return _selected; }
+            set
+            {
+                _selected = value;
+                for (shapeGroup.First();
+                   shapeGroup.IsEOL() == false;
+                   shapeGroup.Next())
+                {
+                    shapeGroup.GetCurrent().Selected = value;
+                }
+            }
+
+        }
+
+        public override int Size
+        {
+            get
+            {
+                shapeGroup.First();
+                return shapeGroup.GetCurrent().Size;
+            }
+        }
 
         public override void DrawItself(Graphics gfx)
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
             {
-                shapeContainer.GetCurrent().DrawItself(gfx);
+                shapeGroup.GetCurrent().DrawItself(gfx);
             }
         }
 
         public override bool IfInside(int posX, int posY)
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
             {
-                if (shapeContainer.GetCurrent().IfInside(posX, posY))
+                if (shapeGroup.GetCurrent().IfInside(posX, posY))
                 {
                     return true;
                 }
@@ -44,11 +83,11 @@ namespace oop_lab6_8.Models
             int shiftX, int shiftY,
             int borderX, int borderY)
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
             {
-                shapeContainer.GetCurrent().ShiftPos(
+                shapeGroup.GetCurrent().ShiftPos(
                     shiftX, shiftY,
                     borderX, borderY);
             }
@@ -56,41 +95,47 @@ namespace oop_lab6_8.Models
 
         public override void SwitchSelection()
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            Selected = Selected ? false : true;
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
             {
-                shapeContainer.GetCurrent().SwitchSelection();
+                shapeGroup.GetCurrent().Selected = Selected;
             }
         }
 
         public override void Resize(int size, int borderX, int borderY)
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
             {
-                shapeContainer.GetCurrent().Resize(size, borderX, borderY);
+                shapeGroup.GetCurrent().Resize(size, borderX, borderY);
             }
         }
-        public override void FitNewCanvasSize(int borderX, int borderY)
+        public override void ReboundPosition(int borderX, int borderY)
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
             {
-                shapeContainer.GetCurrent().SetBoundedPos(x, y, borderX, borderY);
+                shapeGroup.GetCurrent().ReboundPosition(borderX, borderY);
             }
         }
-
-        public override void ChangeColor(Color newColor)
+        public void GroupSelectedShapes(Container<CShape> ShapeContainer) 
         {
-            for (shapeContainer.First();
-                 shapeContainer.IsEOL() == false;
-                 shapeContainer.Next())
+            // TODO: if only one group is selected
+            for (ShapeContainer.First();
+                 ShapeContainer.IsEOL() == false;
+                 ShapeContainer.Next())
             {
-                shapeContainer.GetCurrent().ChangeColor(newColor);
+                if (ShapeContainer.GetCurrent().Selected)
+                {
+                    shapeGroup.Append(ShapeContainer.GetCurrent());
+                    ShapeContainer.DeleteCurrent();
+                }
             }
+            ShapeContainer.Append(this);
         }
     }
 }

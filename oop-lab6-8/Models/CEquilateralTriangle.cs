@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace oop_lab6_8.Models
 {
-    internal class CEquilateralTriangle : CShape
+    internal class CEquilateralTriangle : CBasicShape
     {
         public CEquilateralTriangle(int posX, int posY, int borderX, int borderY) 
             : base(posX, posY, borderX, borderY) { }

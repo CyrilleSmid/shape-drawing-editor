@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace oop_lab6_8.Models
 {
-    public class CCircle : CShape
+    public class CCircle : CBasicShape
     {
         public CCircle(int posX, int posY, int borderX, int borderY)
             : base(posX, posY, borderX, borderY) { }

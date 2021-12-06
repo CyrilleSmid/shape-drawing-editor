@@ -42,7 +42,7 @@ namespace oop_lab6_8
         private void canvasImage_Loaded(object sender, RoutedEventArgs e)
         {
             DrawShapes();
-            ViewModel.MaxSize = (int)(Math.Min(canvas.ActualWidth, canvas.ActualHeight) / 2 - ViewModel.ShapeThickness);
+            ViewModel.MaxSize = (int)(Math.Min(canvas.ActualWidth, canvas.ActualHeight) / 2 - 6);
         }
 
         public System.Windows.Point GetCurentCanvasSize()
@@ -184,6 +184,11 @@ namespace oop_lab6_8
                 resourceColor.Color.R,
                 resourceColor.Color.G,
                 resourceColor.Color.B);
+        }
+
+        private void GroupSelection_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.GroupSelectedShapes();
         }
     }
 }

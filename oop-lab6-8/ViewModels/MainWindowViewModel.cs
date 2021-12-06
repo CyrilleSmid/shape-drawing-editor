@@ -140,7 +140,6 @@ namespace oop_lab6_8.ViewModels
         private const int minSize = 10;
         private int maxSize;
         public int MinSize { get { return minSize; } }
-        public int ShapeThickness { get { return CShape.Thickness; } }
         public int MaxSize 
         { 
             get { return maxSize; } 
@@ -188,7 +187,7 @@ namespace oop_lab6_8.ViewModels
                  ShapeContainer.IsEOL() == false;
                  ShapeContainer.Next())
             {
-                ShapeContainer.GetCurrent().FitNewCanvasSize(
+                ShapeContainer.GetCurrent().ReboundPosition(
                     (int)View.GetCurentCanvasSize().X,
                     (int)View.GetCurentCanvasSize().Y);
             }
@@ -252,13 +251,19 @@ namespace oop_lab6_8.ViewModels
             {
                 if (ShapeContainer.GetCurrent().Selected)
                 {
-                    ShapeContainer.GetCurrent().ChangeColor(System.Drawing.Color.FromArgb(
+                    ShapeContainer.GetCurrent().FillColor = System.Drawing.Color.FromArgb(
                         SelectedShapeColor.A,
                         SelectedShapeColor.R,
                         SelectedShapeColor.G,
-                        SelectedShapeColor.B));
+                        SelectedShapeColor.B);
                 }
             }
+        }
+
+        public void GroupSelectedShapes()
+        {
+            CShapeGroup shapeGroup = new CShapeGroup();
+            shapeGroup.GroupSelectedShapes(ShapeContainer);
         }
     }
 }
