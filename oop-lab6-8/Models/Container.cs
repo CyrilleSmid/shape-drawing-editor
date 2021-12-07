@@ -104,5 +104,17 @@ namespace oop_lab6_8.Models
 
             return false;
         }
+
+        int savedCurElIndex = -1;
+        public void SaveIterationState()
+        {
+            savedCurElIndex = curElIndex;
+        }
+
+        public void RevertToSavedIterationState(bool deletion)
+        {
+            curElIndex = savedCurElIndex;
+            shiftedByDeletion = deletion;
+        }
     }
 }

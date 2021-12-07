@@ -66,6 +66,14 @@
     <Compile Include="Models\CShapeGroup.cs" />
     <Compile Include="Models\CSquare.cs" />
     <Compile Include="Models\CEquilateralTriangle.cs" />
+    <Compile Include="ShapeCommands\AddShapeCommand.cs" />
+    <Compile Include="ShapeCommands\ChangeColorCommand.cs" />
+    <Compile Include="ShapeCommands\CShapeCommand.cs" />
+    <Compile Include="ShapeCommands\DeleteShapeCommand.cs" />
+    <Compile Include="ShapeCommands\GroupShapesCommand.cs" />
+    <Compile Include="ShapeCommands\ResizeShapeCommand.cs" />
+    <Compile Include="ShapeCommands\ShiftShapeCommand.cs" />
+    <Compile Include="ShapeCommands\UngroupShapeCommand.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

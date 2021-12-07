@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:oop_lab6_8"
         mc:Ignorable="d" 
-        Height="600" Width="1000" MinHeight="600" MinWidth="780"
-        KeyUp="window_KeyUp" Loaded="Window_Loaded" 
+        Height="800" Width="1100" MinHeight="600" MinWidth="780"
+        KeyDown="Window_KeyDown" Loaded="Window_Loaded" 
         MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -40,7 +40,7 @@
                          Style="{StaticResource RoundedTextBox}" 
                          Margin="0,0,0,10" 
                          KeyDown="TextBox_KeyDown"/>-->
-                <Slider Minimum="{Binding MinSize}" Maximum="{Binding MaxSize}" 
+                <Slider x:Name="sizeSlider" Minimum="{Binding MinSize}" Maximum="{Binding MaxSize}" 
                         Value="{Binding SelectedShapeSize, Mode=TwoWay}" 
                         ValueChanged="resizeSlider_ValueChanged"/>
                 <TextBlock Text="Color" Margin="0,20,0,0" />
@@ -52,8 +52,16 @@
                         Maximum="255" Foreground="{StaticResource Green}" Margin="0,0,0,10"/>
                 <Slider x:Name="blueSlider" Value="{Binding ShapeColorBlue, Mode=TwoWay}" ValueChanged="colorSlider_ValueChanged"
                         Maximum="255" Foreground="{StaticResource Blue}" Margin="0,0,0,10"/>
-                <Button HorizontalAlignment="Stretch" Content="Group selection" Margin="0,10"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button HorizontalAlignment="Stretch" Content="Group" Margin="0,10,5,10"
                         Click="GroupSelection_Click"/>
+                    <Button Grid.Column="1" HorizontalAlignment="Stretch" Content="Ungroup" Margin="5,10,0,10"
+                        Click="UngroupSelection_Click"/>
+                </Grid>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
                     - Hold Left Ctrl to select multiple shapes
                 </TextBlock>

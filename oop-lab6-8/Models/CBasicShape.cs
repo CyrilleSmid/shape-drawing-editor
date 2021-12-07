@@ -22,43 +22,41 @@ namespace oop_lab6_8.Models
         public override Color FillColor { get { return fillColor; } set { fillColor = value; } }
         public override bool Selected { get; set; }
 
-        public CBasicShape(int posX, int posY, int borderX, int borderY)
+        public CBasicShape(int posX, int posY)
         {
-            SetBoundedPos(posX, posY, borderX, borderY);
+            SetBoundedPos(posX, posY);
         }
 
-        protected virtual void SetBoundedPos(int posX, int posY, int borderX, int borderY)
+        protected virtual void SetBoundedPos(int posX, int posY)
         {
-            x = Math.Min(Math.Max(size + thickness, posX), borderX - size - thickness);
-            y = Math.Min(Math.Max(size + thickness, posY), borderY - size - thickness);
+            x = Math.Min(Math.Max(size + thickness, posX), CanvasSizeX - size - thickness);
+            y = Math.Min(Math.Max(size + thickness, posY), CanvasSizeY - size - thickness);
         }
 
-        public override void ReboundPosition(int borderX, int borderY)
+        public override void ReboundPosition()
         {
-            SetBoundedPos(x, y, borderX, borderY);
+            SetBoundedPos(x, y);
         }
 
-        public override void ShiftPos(
-            int shiftX, int shiftY,
-            int borderX, int borderY)
+        public override void ShiftPos(int shiftX, int shiftY)
         {
-            Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
+            //Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
             x = x + shiftX;
             y = y + shiftY;
-            SetBoundedPos(x, y, borderX, borderY);
+            ReboundPosition();
         }
 
         public override void SwitchSelection()
         {
             Selected = Selected ? false : true;
-            Debug.WriteLine($"CShape.SwitchSelection to {Selected}");
+            //Debug.WriteLine($"CShape.SwitchSelection to {Selected}");
         }
 
-        public override void Resize(int size, int borderX, int borderY)
+        public override void Resize(int size)
         {
-            Debug.WriteLine($"CShape.Resize({size}, {borderX}, {borderY})");
+            //Debug.WriteLine($"CShape.Resize({size}, {CanvasSizeX}, {CanvasSizeY})");
             this.size = size;
-            SetBoundedPos(x, y, borderX, borderY);
+            ReboundPosition();
         }
 
         public override void DrawItself(Graphics gfx)

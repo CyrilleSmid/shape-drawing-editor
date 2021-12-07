@@ -13,7 +13,7 @@ namespace oop_lab6_8.Models
 
         public override Color FillColor
         {
-            get 
+            get
             {
                 shapeGroup.First();
                 return shapeGroup.GetCurrent().FillColor;
@@ -29,7 +29,7 @@ namespace oop_lab6_8.Models
             }
         }
 
-        private bool _selected = false;
+        private bool _selected = true;
         public override bool Selected
         {
             get { return _selected; }
@@ -79,17 +79,13 @@ namespace oop_lab6_8.Models
             return false;
         }
 
-        public override void ShiftPos(
-            int shiftX, int shiftY,
-            int borderX, int borderY)
+        public override void ShiftPos(int shiftX, int shiftY)
         {
             for (shapeGroup.First();
                  shapeGroup.IsEOL() == false;
                  shapeGroup.Next())
             {
-                shapeGroup.GetCurrent().ShiftPos(
-                    shiftX, shiftY,
-                    borderX, borderY);
+                shapeGroup.GetCurrent().ShiftPos(shiftX, shiftY);
             }
         }
 
@@ -104,25 +100,25 @@ namespace oop_lab6_8.Models
             }
         }
 
-        public override void Resize(int size, int borderX, int borderY)
+        public override void Resize(int size)
         {
             for (shapeGroup.First();
                  shapeGroup.IsEOL() == false;
                  shapeGroup.Next())
             {
-                shapeGroup.GetCurrent().Resize(size, borderX, borderY);
+                shapeGroup.GetCurrent().Resize(size);
             }
         }
-        public override void ReboundPosition(int borderX, int borderY)
+        public override void ReboundPosition()
         {
             for (shapeGroup.First();
                  shapeGroup.IsEOL() == false;
                  shapeGroup.Next())
             {
-                shapeGroup.GetCurrent().ReboundPosition(borderX, borderY);
+                shapeGroup.GetCurrent().ReboundPosition();
             }
         }
-        public void GroupSelectedShapes(Container<CShape> ShapeContainer) 
+        public void GroupSelectedShapes(Container<CShape> ShapeContainer)
         {
             // TODO: if only one group is selected
             for (ShapeContainer.First();
@@ -135,7 +131,29 @@ namespace oop_lab6_8.Models
                     ShapeContainer.DeleteCurrent();
                 }
             }
+            Selected = true;
             ShapeContainer.Append(this);
+        }
+        public void UngroupShapes(Container<CShape> shapeContainer)
+        {
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
+            {
+                shapeContainer.Append(shapeGroup.GetCurrent());
+            }
+            shapeContainer.SaveIterationState();
+            for (shapeContainer.First();
+                 shapeContainer.IsEOL() == false;
+                 shapeContainer.Next())
+            {
+                if(shapeContainer.GetCurrent() == this)
+                {
+                    shapeContainer.DeleteCurrent();
+                }
+            }
+            shapeContainer.RevertToSavedIterationState(true);
+            
         }
     }
 }

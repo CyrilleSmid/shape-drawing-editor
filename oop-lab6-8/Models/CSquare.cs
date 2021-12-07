@@ -9,8 +9,8 @@ namespace oop_lab6_8.Models
 {
     internal class CSquare : CBasicShape
     {
-        public CSquare(int posX, int posY, int borderX, int borderY)
-            : base(posX, posY, borderX, borderY) { }
+        public CSquare(int posX, int posY)
+            : base(posX, posY) { }
 
         public override void DrawItself(Graphics gfx)
         {

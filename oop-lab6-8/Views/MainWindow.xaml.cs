@@ -31,16 +31,18 @@ namespace oop_lab6_8
             DataContext = ViewModel;
 
             InitializeComponent();
+            stopwatch.Start();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             shapesComboBox.ItemsSource = 
-                Enum.GetValues(typeof(MainWindowViewModel.Shapes)).Cast<MainWindowViewModel.Shapes>();
+                Enum.GetValues(typeof(Models.Shapes)).Cast<Models.Shapes>();
             shapesComboBox.SelectedIndex = 0;
         }
 
         private void canvasImage_Loaded(object sender, RoutedEventArgs e)
         {
+            ViewModel.CanvasSizeChanged();
             DrawShapes();
             ViewModel.MaxSize = (int)(Math.Min(canvas.ActualWidth, canvas.ActualHeight) / 2 - 6);
         }
@@ -72,7 +74,7 @@ namespace oop_lab6_8
                     ViewModel.AddShape(
                         (int)e.GetPosition(canvas).X,
                         (int)e.GetPosition(canvas).Y,
-                        (MainWindowViewModel.Shapes)shapesComboBox.SelectedIndex);
+                        (Models.Shapes)shapesComboBox.SelectedIndex);
                     DrawShapes();
                 }
             }
@@ -98,35 +100,63 @@ namespace oop_lab6_8
         {
             dragging = false;
         }
+        Stopwatch stopwatch = new Stopwatch();
+        int shiftUpdateFrequency = 40;
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if(dragging && e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftShift))
+
+            if(stopwatch.ElapsedMilliseconds > shiftUpdateFrequency &&
+               dragging && e.LeftButton == MouseButtonState.Pressed && 
+               Keyboard.IsKeyDown(Key.LeftShift))
             {
                 System.Windows.Point currentMousePos = e.GetPosition(canvas);
                 int shiftX = (int)(currentMousePos.X - draggingFrom.X);
                 int shiftY = (int)(currentMousePos.Y - draggingFrom.Y);
                 ViewModel.ShiftSelectedShapes(shiftX, shiftY);
                 draggingFrom = currentMousePos;
-                Debug.WriteLine($"Dragging({shiftX}, {shiftY})");
+                //Debug.WriteLine($"Dragging({shiftX}, {shiftY})");
                 DrawShapes();
+
+                stopwatch.Restart();
             }
         }
-        private void window_KeyUp(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if(e.Key == Key.Left)
+            {
+                ViewModel.ShiftSelectedShapes(-10, 0);
+            }
+            else if (e.Key == Key.Up)
+            {
+                ViewModel.ShiftSelectedShapes(0, -10);
+            }
+            else if(e.Key == Key.Right)
+            {
+                ViewModel.ShiftSelectedShapes(10, 0);
+            }
+            else if(e.Key == Key.Down)
+            {
+                ViewModel.ShiftSelectedShapes(0, 10);
+            }
+            else if(e.Key == Key.OemPlus)
+            {
+                ViewModel.SelectedShapeSize += 20;
+                ViewModel.ResizeSelectedShapes();
+            }
+            else if(e.Key == Key.OemMinus)
+            {
+                ViewModel.SelectedShapeSize -= 20;
+                ViewModel.ResizeSelectedShapes();
+            }
+            else if(e.Key == Key.Delete)
             {
                 ViewModel.DeleteSelectedShapes();
-                DrawShapes();
             }
-        }
-
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter)
+            else if(e.Key == Key.Z && Keyboard.IsKeyDown(Key.LeftCtrl))
             {
-                ViewModel.ResizeSelectedShapes();
-                DrawShapes();
+                ViewModel.UndoLastCommand();
             }
+            DrawShapes();
         }
         private void resizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -189,6 +219,10 @@ namespace oop_lab6_8
         private void GroupSelection_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.GroupSelectedShapes();
+        }
+        private void UngroupSelection_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.UngroupSelection();
         }
     }
 }

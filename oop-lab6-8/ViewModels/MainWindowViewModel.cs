@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using oop_lab6_8.Models;
 using System.Diagnostics;
+using oop_lab6_8.ShapeCommands;
 
 
 namespace oop_lab6_8.ViewModels
@@ -21,11 +22,14 @@ namespace oop_lab6_8.ViewModels
         Container<CShape> _shapeContainer = new Container<CShape>();
         public Container<CShape> ShapeContainer { get { return _shapeContainer; } }
 
-        public enum Shapes
-        { 
-            Circle,
-            Square,
-            Triangle
+        private Stack<CShapeCommand> history = new Stack<CShapeCommand>(300); // TODO implement delayed history commit
+
+        public void UndoLastCommand()
+        {
+            if(history.Count > 0)
+            {
+                history.Pop().Unexecute();
+            }
         }
 
         public void AddShape(int posX, int posY, Shapes shapeType)
@@ -34,19 +38,13 @@ namespace oop_lab6_8.ViewModels
             switch(shapeType)
             {
                 case Shapes.Square:
-                    shape = new CSquare(posX, posY,
-                        (int)View.GetCurentCanvasSize().X,
-                        (int)View.GetCurentCanvasSize().Y);
+                    shape = new CSquare(posX, posY);
                     break;
                 case Shapes.Triangle:
-                    shape = new CEquilateralTriangle(posX, posY,
-                        (int)View.GetCurentCanvasSize().X,
-                        (int)View.GetCurentCanvasSize().Y);
+                    shape = new CEquilateralTriangle(posX, posY);
                     break;
                 default:
-                    shape = new CCircle(posX, posY,
-                        (int)View.GetCurentCanvasSize().X,
-                        (int)View.GetCurentCanvasSize().Y);
+                    shape = new CCircle(posX, posY);
                     break;
             }
             
@@ -58,7 +56,9 @@ namespace oop_lab6_8.ViewModels
                 shape.FillColor.G,
                 shape.FillColor.B);
 
-            ShapeContainer.Append(shape);
+            AddShapeCommand addCommand = new AddShapeCommand(ShapeContainer);
+            addCommand.Execute(shape);
+            history.Push(addCommand);
         }
         public void SelectShapeAt(int posX, int posY)
         {
@@ -84,7 +84,7 @@ namespace oop_lab6_8.ViewModels
             {
                 if(ShapeContainer.GetCurrent().Selected)
                 {
-                    if(anySelected)
+                    if(anySelected || ShapeContainer.GetCurrent().GetType() == typeof(CShapeGroup))
                     {
                         return;
                     }
@@ -117,7 +117,9 @@ namespace oop_lab6_8.ViewModels
             {
                 if(ShapeContainer.GetCurrent().Selected)
                 {
-                    ShapeContainer.DeleteCurrent();
+                    DeleteShapeCommand deleteCommand = new DeleteShapeCommand(ShapeContainer);
+                    deleteCommand.Execute(ShapeContainer.GetCurrent());
+                    history.Push(deleteCommand);
                 }
             }
         }
@@ -129,10 +131,9 @@ namespace oop_lab6_8.ViewModels
             {
                 if (ShapeContainer.GetCurrent().Selected)
                 {
-                    ShapeContainer.GetCurrent().ShiftPos(
-                        shiftX, shiftY,
-                        (int)View.GetCurentCanvasSize().X,
-                        (int)View.GetCurentCanvasSize().Y);
+                    ShiftShapeCommand shiftCommand = new ShiftShapeCommand(shiftX, shiftY);
+                    shiftCommand.Execute(ShapeContainer.GetCurrent());
+                    history.Push(shiftCommand);
                 }
             }
         }
@@ -172,24 +173,24 @@ namespace oop_lab6_8.ViewModels
                  ShapeContainer.IsEOL() == false;
                  ShapeContainer.Next())
             {
-                if (ShapeContainer.GetCurrent().Selected)
+                if (ShapeContainer.GetCurrent().Selected && 
+                    ShapeContainer.GetCurrent().Size != SelectedShapeSize)
                 {
-                    ShapeContainer.GetCurrent().Resize(
-                        SelectedShapeSize,
-                        (int)View.GetCurentCanvasSize().X,
-                        (int)View.GetCurentCanvasSize().Y);
+                    ResizeShapeCommand resizeCommand = new ResizeShapeCommand(SelectedShapeSize);
+                    resizeCommand.Execute(ShapeContainer.GetCurrent());
+                    history.Push(resizeCommand);
                 }
             }
         }
         public void CanvasSizeChanged()
         {
+            CShape.CanvasSizeX = (int)View.GetCurentCanvasSize().X;
+            CShape.CanvasSizeY = (int)View.GetCurentCanvasSize().Y;
             for (ShapeContainer.First();
                  ShapeContainer.IsEOL() == false;
                  ShapeContainer.Next())
             {
-                ShapeContainer.GetCurrent().ReboundPosition(
-                    (int)View.GetCurentCanvasSize().X,
-                    (int)View.GetCurentCanvasSize().Y);
+                ShapeContainer.GetCurrent().ReboundPosition();
             }
         }
 
@@ -249,21 +250,46 @@ namespace oop_lab6_8.ViewModels
                  ShapeContainer.IsEOL() == false;
                  ShapeContainer.Next())
             {
-                if (ShapeContainer.GetCurrent().Selected)
+                if (ShapeContainer.GetCurrent().Selected && ((
+                    ShapeContainer.GetCurrent().FillColor.A == SelectedShapeColor.A &&
+                    ShapeContainer.GetCurrent().FillColor.R == SelectedShapeColor.R &&
+                    ShapeContainer.GetCurrent().FillColor.G == SelectedShapeColor.G &&
+                    ShapeContainer.GetCurrent().FillColor.B == SelectedShapeColor.B) == false))
                 {
-                    ShapeContainer.GetCurrent().FillColor = System.Drawing.Color.FromArgb(
+                    System.Drawing.Color newColor = System.Drawing.Color.FromArgb(
                         SelectedShapeColor.A,
                         SelectedShapeColor.R,
                         SelectedShapeColor.G,
                         SelectedShapeColor.B);
+                    ChangeColorCommand changeColorCommand = new ChangeColorCommand(newColor);
+                    changeColorCommand.Execute(ShapeContainer.GetCurrent());
+                    history.Push(changeColorCommand);
                 }
             }
         }
 
         public void GroupSelectedShapes()
         {
+            GroupShapesCommand groupCommand = new GroupShapesCommand(ShapeContainer);
             CShapeGroup shapeGroup = new CShapeGroup();
-            shapeGroup.GroupSelectedShapes(ShapeContainer);
+            groupCommand.Execute(shapeGroup);
+            history.Push(groupCommand);
+        }
+        public void UngroupSelection()
+        {
+            for (ShapeContainer.First();
+                 ShapeContainer.IsEOL() == false;
+                 ShapeContainer.Next())
+            {
+                if (ShapeContainer.GetCurrent().Selected &&
+                    ShapeContainer.GetCurrent().GetType() == typeof(CShapeGroup))
+                {
+                    UngroupShapeCommand ungroupCommand = new UngroupShapeCommand(ShapeContainer);
+                    CShapeGroup group = ((CShapeGroup)ShapeContainer.GetCurrent());
+                    ungroupCommand.Execute(group);
+                    history.Push(ungroupCommand);
+                }
+            }
         }
     }
 }

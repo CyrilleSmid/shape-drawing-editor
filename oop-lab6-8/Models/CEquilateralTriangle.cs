@@ -9,14 +9,14 @@ namespace oop_lab6_8.Models
 {
     internal class CEquilateralTriangle : CBasicShape
     {
-        public CEquilateralTriangle(int posX, int posY, int borderX, int borderY) 
-            : base(posX, posY, borderX, borderY) { }
+        public CEquilateralTriangle(int posX, int posY) 
+            : base(posX, posY) { }
 
-        protected override void SetBoundedPos(int posX, int posY, int borderX, int borderY) 
+        protected override void SetBoundedPos(int posX, int posY) 
         {
             int a = (int)(size * 2 / Math.Sqrt(3));
-            x = Math.Min(Math.Max(size + thickness, posX), borderX - size - thickness);
-            y = Math.Min(Math.Max(a / 2 + thickness, posY), borderY - a - thickness);
+            x = Math.Min(Math.Max(size + thickness, posX), CanvasSizeX - size - thickness);
+            y = Math.Min(Math.Max(a / 2 + thickness, posY), CanvasSizeY - a - thickness);
         }
 
         public override void DrawItself(Graphics gfx)

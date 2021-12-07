@@ -9,8 +9,18 @@ using System.Diagnostics;
 
 namespace oop_lab6_8.Models
 {
+    public enum Shapes
+    {
+        Circle,
+        Square,
+        Triangle
+    }
+
     public abstract class CShape
     {
+        public static int CanvasSizeX { get; set; }
+        public static int CanvasSizeY { get; set; }
+
         public CShape() { }
     
         public abstract int Size { get; }
@@ -23,12 +33,12 @@ namespace oop_lab6_8.Models
 
         public abstract bool IfInside(int posX, int posY);
 
-        public abstract void ShiftPos(int shiftX, int shiftY, int borderX, int borderY);
+        public abstract void ShiftPos(int shiftX, int shiftY);
 
         public abstract void SwitchSelection();
 
-        public abstract void Resize(int size, int borderX, int borderY);
+        public abstract void Resize(int size);
 
-        public abstract void ReboundPosition(int borderX, int borderY);
+        public abstract void ReboundPosition();
     }
 }
