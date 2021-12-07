@@ -1,6 +1,7 @@
 ﻿using oop_lab6_8.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace oop_lab6_8.ShapeCommands
         CShape receiver;
         int shiftX;
         int shiftY;
+        Point actualShift;
         public ShiftShapeCommand(int shiftX, int shiftY)
         {
             this.shiftX = shiftX;
@@ -26,12 +28,12 @@ namespace oop_lab6_8.ShapeCommands
         public override void Execute(CShape shape)
         {
             receiver = shape;
-            shape.ShiftPos(shiftX, shiftY);
+            actualShift = shape.ShiftPos(shiftX, shiftY);
         }
 
         public override void Unexecute()
         {
-            receiver.ShiftPos(-shiftX, -shiftY);
+            receiver.ShiftPos(-actualShift.X, -actualShift.Y);
         }
     }
 }

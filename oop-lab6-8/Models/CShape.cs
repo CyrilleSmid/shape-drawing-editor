@@ -33,7 +33,9 @@ namespace oop_lab6_8.Models
 
         public abstract bool IfInside(int posX, int posY);
 
-        public abstract void ShiftPos(int shiftX, int shiftY);
+        public abstract System.Drawing.Point ShiftPos(int shiftX, int shiftY);
+
+        public abstract System.Drawing.Point ActualShift(int shiftX, int shiftY);
 
         public abstract void SwitchSelection();
 

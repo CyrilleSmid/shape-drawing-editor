@@ -38,12 +38,21 @@ namespace oop_lab6_8.Models
             SetBoundedPos(x, y);
         }
 
-        public override void ShiftPos(int shiftX, int shiftY)
+        public override Point ShiftPos(int shiftX, int shiftY)
         {
             //Debug.WriteLine($"CShape.ShiftPos({x}, {y})");
+            int oldPosX = x;
+            int oldPosY = y;
             x = x + shiftX;
             y = y + shiftY;
             ReboundPosition();
+            return new Point(x - oldPosX, y - oldPosY);
+        }
+        public override System.Drawing.Point ActualShift(int shiftX, int shiftY)
+        {
+            int newPotentialX = Math.Min(Math.Max(size + thickness, x + shiftX), CanvasSizeX - size - thickness);
+            int newPotentialY = Math.Min(Math.Max(size + thickness, y + shiftY), CanvasSizeY - size - thickness);
+            return new Point(newPotentialX - x, newPotentialY - y);
         }
 
         public override void SwitchSelection()

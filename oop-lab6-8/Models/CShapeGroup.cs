@@ -79,14 +79,36 @@ namespace oop_lab6_8.Models
             return false;
         }
 
-        public override void ShiftPos(int shiftX, int shiftY)
+        public override Point ShiftPos(int shiftX, int shiftY)
         {
+            Point actualShift = ActualShift(shiftX, shiftY);
+            for (shapeGroup.First();
+            shapeGroup.IsEOL() == false;
+            shapeGroup.Next())
+            {
+                shapeGroup.GetCurrent().ShiftPos(actualShift.X, actualShift.Y);
+            }
+            return new Point(actualShift.X, actualShift.Y); 
+        }
+        public override Point ActualShift(int shiftX, int shiftY)
+        {
+            int actualShiftX = int.MaxValue;
+            int actualShiftY = int.MaxValue;
             for (shapeGroup.First();
                  shapeGroup.IsEOL() == false;
                  shapeGroup.Next())
             {
-                shapeGroup.GetCurrent().ShiftPos(shiftX, shiftY);
+                Point actualShift = shapeGroup.GetCurrent().ActualShift(shiftX, shiftY);
+                if(Math.Abs(actualShift.X) < Math.Abs(actualShiftX))
+                {
+                    actualShiftX = actualShift.X;
+                }
+                if (Math.Abs(actualShift.Y) < Math.Abs(actualShiftY))
+                {
+                    actualShiftY = actualShift.Y;
+                }
             }
+            return new Point(actualShiftX, actualShiftY);
         }
 
         public override void SwitchSelection()
