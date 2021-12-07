@@ -26,6 +26,7 @@ namespace oop_lab6_8.Models
         {
             SetBoundedPos(posX, posY);
         }
+        public CBasicShape() { }
 
         protected virtual void SetBoundedPos(int posX, int posY)
         {
@@ -68,14 +69,39 @@ namespace oop_lab6_8.Models
             ReboundPosition();
         }
 
-        public override void DrawItself(Graphics gfx)
+        protected void SaveCommonProperties(List<string> fileLines)
         {
-            throw new NotImplementedException();
-        }
+            fileLines.Add("Position X:");
+            fileLines.Add($"{x}");
+            fileLines.Add("Position Y:");
+            fileLines.Add($"{y}");
 
-        public override bool IfInside(int posX, int posY)
+            fileLines.Add("Size:");
+            fileLines.Add($"{size}");
+
+            fileLines.Add("Color A:");
+            fileLines.Add($"{FillColor.A}");
+            fileLines.Add("Color R:");
+            fileLines.Add($"{FillColor.R}");
+            fileLines.Add("Color G:");
+            fileLines.Add($"{FillColor.G}");
+            fileLines.Add("Color B:");
+            fileLines.Add($"{FillColor.B}");
+        }
+        protected void LoadCommonProperties(Queue<string> fileLinesQueue)
         {
-            throw new NotImplementedException();
+            x = int.Parse(fileLinesQueue.Dequeue());
+            y = int.Parse(fileLinesQueue.Dequeue());
+
+            size = int.Parse(fileLinesQueue.Dequeue());
+
+            Color fillColor = Color.FromArgb(
+                int.Parse(fileLinesQueue.Dequeue()),
+                int.Parse(fileLinesQueue.Dequeue()),
+                int.Parse(fileLinesQueue.Dequeue()),
+                int.Parse(fileLinesQueue.Dequeue())
+                );
+            FillColor = fillColor;
         }
     }
 }

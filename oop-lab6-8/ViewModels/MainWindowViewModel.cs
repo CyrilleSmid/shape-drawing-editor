@@ -17,12 +17,21 @@ namespace oop_lab6_8.ViewModels
         public MainWindowViewModel(IMainWindowView view)
         {
             View = view;
+            ShapeContainer.LoadShapes();
+        }
+        ~MainWindowViewModel()
+        {
+            ShapeContainer.SaveShapes();
         }
 
-        Container<CShape> _shapeContainer = new Container<CShape>();
-        public Container<CShape> ShapeContainer { get { return _shapeContainer; } }
+        SerializableShapeContainer _shapeContainer = new SerializableShapeContainer();
+        public SerializableShapeContainer ShapeContainer 
+        {
+            get { return _shapeContainer; } 
+            private set { _shapeContainer = value; }
+        }
 
-        private Stack<CShapeCommand> history = new Stack<CShapeCommand>(300); // TODO implement delayed history commit
+        private Stack<CShapeCommand> history = new Stack<CShapeCommand>(); // TODO implement delayed history commit
 
         public void UndoLastCommand()
         {
@@ -290,6 +299,15 @@ namespace oop_lab6_8.ViewModels
                     history.Push(ungroupCommand);
                 }
             }
+        }
+        public void Save()
+        {
+            ShapeContainer.SaveShapes();
+        }
+        public void Load()
+        {
+            ShapeContainer = new SerializableShapeContainer();
+            ShapeContainer.LoadShapes();
         }
     }
 }

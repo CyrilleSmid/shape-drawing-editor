@@ -66,6 +66,7 @@
     <Compile Include="Models\CShapeGroup.cs" />
     <Compile Include="Models\CSquare.cs" />
     <Compile Include="Models\CEquilateralTriangle.cs" />
+    <Compile Include="Models\SerializableShapeContainer.cs" />
     <Compile Include="ShapeCommands\AddShapeCommand.cs" />
     <Compile Include="ShapeCommands\ChangeColorCommand.cs" />
     <Compile Include="ShapeCommands\CShapeCommand.cs" />

@@ -62,11 +62,27 @@
                     <Button Grid.Column="1" HorizontalAlignment="Stretch" Content="Ungroup" Margin="5,10,0,10"
                         Click="UngroupSelection_Click"/>
                 </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button HorizontalAlignment="Stretch" Content="Save" Margin="0,10,5,10"
+                        Click="Save_Click"/>
+                    <Button Grid.Column="1" HorizontalAlignment="Stretch" Content="Load" Margin="5,10,0,10"
+                        Click="Load_Click"/>
+                </Grid>
+                <TextBlock TextWrapping="Wrap" FontSize="16">
+                    - Use arrows or mouse to move shapes
+                </TextBlock>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
                     - Hold Left Ctrl to select multiple shapes
                 </TextBlock>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
                     - Hold Left Shift to move selected shapes
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" FontSize="16">
+                    - Press Ctrl + Z to undo
                 </TextBlock>
             </StackPanel>
         </Border>

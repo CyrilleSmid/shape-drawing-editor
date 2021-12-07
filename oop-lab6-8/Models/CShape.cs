@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows;
 using System.Diagnostics;
+using System.IO;
 
 namespace oop_lab6_8.Models
 {
@@ -42,5 +43,9 @@ namespace oop_lab6_8.Models
         public abstract void Resize(int size);
 
         public abstract void ReboundPosition();
+
+        public abstract void Save(List<string> fileLines);
+
+        public abstract void Load(Queue<string> fileLinesQueue);
     }
 }

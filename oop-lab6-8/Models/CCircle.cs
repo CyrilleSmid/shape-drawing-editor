@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace oop_lab6_8.Models
     {
         public CCircle(int posX, int posY)
             : base(posX, posY) { }
+
+        public CCircle() { }
 
         public override void DrawItself(Graphics gfx)
         {
@@ -36,6 +39,17 @@ namespace oop_lab6_8.Models
         public override bool IfInside(int posX, int posY) 
 {
             return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= size;
+        }
+
+        public override void Save(List<string> fileLines)
+        {
+            fileLines.Add("Shape type:");
+            fileLines.Add("Circle");
+            SaveCommonProperties(fileLines);
+        }
+        public override void Load(Queue<string> fileLinesQueue)
+        {
+            LoadCommonProperties(fileLinesQueue);
         }
     }
 }

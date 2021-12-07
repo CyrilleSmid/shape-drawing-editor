@@ -11,6 +11,7 @@ namespace oop_lab6_8.Models
     {
         public CSquare(int posX, int posY)
             : base(posX, posY) { }
+        public CSquare() { }
 
         public override void DrawItself(Graphics gfx)
         {
@@ -35,6 +36,16 @@ namespace oop_lab6_8.Models
         public override bool IfInside(int posX, int posY)
         {
             return Math.Abs(x - posX) <= size && Math.Abs(y - posY) <= size;
+        }
+        public override void Save(List<string> fileLines)
+        {
+            fileLines.Add("Shape type:");
+            fileLines.Add("Square");
+            SaveCommonProperties(fileLines);
+        }
+        public override void Load(Queue<string> fileLinesQueue)
+        {
+            LoadCommonProperties(fileLinesQueue);
         }
     }
 }

@@ -177,5 +177,24 @@ namespace oop_lab6_8.Models
             shapeContainer.RevertToSavedIterationState(true);
             
         }
+        public override void Save(List<string> fileLines)
+        {
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
+            {
+                shapeGroup.GetCurrent().Save(fileLines);
+            }
+        }
+        public override void Load(Queue<string> fileLinesQueue)
+        {
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
+            {
+                shapeGroup.GetCurrent().Load(fileLinesQueue);
+            }
+            
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace oop_lab6_8.Models
     {
         public CEquilateralTriangle(int posX, int posY) 
             : base(posX, posY) { }
-
+        public CEquilateralTriangle() { }
         protected override void SetBoundedPos(int posX, int posY) 
         {
             int a = (int)(size * 2 / Math.Sqrt(3));
@@ -41,6 +41,16 @@ namespace oop_lab6_8.Models
         public override bool IfInside(int posX, int posY)
         {
             return Math.Sqrt((x - posX) * (x - posX) + (y - posY) * (y - posY)) <= size * 0.7;
+        }
+        public override void Save(List<string> fileLines)
+        {
+            fileLines.Add("Shape type:");
+            fileLines.Add("Triangle");
+            SaveCommonProperties(fileLines);
+        }
+        public override void Load(Queue<string> fileLinesQueue)
+        {
+            LoadCommonProperties(fileLinesQueue);
         }
     }
 }

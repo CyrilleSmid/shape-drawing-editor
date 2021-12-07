@@ -224,5 +224,14 @@ namespace oop_lab6_8
         {
             ViewModel.UngroupSelection();
         }
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Save();
+        }
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Load();
+            DrawShapes();
+        }
     }
 }
