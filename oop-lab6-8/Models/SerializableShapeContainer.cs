@@ -57,6 +57,9 @@ namespace oop_lab6_8.Models
                     case "Triangle":
                         shape = new CEquilateralTriangle();
                         break;
+                    case "ShapeGroup":
+                        shape = new CShapeGroup();
+                        break;
                 }
                 if(shape != null)
                 {

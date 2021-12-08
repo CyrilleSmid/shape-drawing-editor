@@ -182,6 +182,19 @@ namespace oop_lab6_8.Models
         }
         public override void Save(List<string> fileLines)
         {
+            fileLines.Add("Shape type:");
+            fileLines.Add("ShapeGroup");
+
+            int shapeCount = 0;
+            for (shapeGroup.First();
+                 shapeGroup.IsEOL() == false;
+                 shapeGroup.Next())
+            {
+                shapeCount += 1;
+            }
+            fileLines.Add("shapeCount:");
+            fileLines.Add($"{shapeCount}");
+
             for (shapeGroup.First();
                  shapeGroup.IsEOL() == false;
                  shapeGroup.Next())
@@ -191,11 +204,36 @@ namespace oop_lab6_8.Models
         }
         public override void Load(Queue<string> fileLinesQueue)
         {
-            for (shapeGroup.First();
-                 shapeGroup.IsEOL() == false;
-                 shapeGroup.Next())
+            int shapeCount = int.Parse(fileLinesQueue.Dequeue());
+
+            for (int i = 0; i < shapeCount; i++)
             {
-                shapeGroup.GetCurrent().Load(fileLinesQueue);
+                string shapeType = fileLinesQueue.Dequeue();
+                CShape shape = null;
+                switch (shapeType)
+                {
+                    case "Circle":
+                        shape = new CCircle();
+                        break;
+                    case "Square":
+                        shape = new CSquare();
+                        break;
+                    case "Triangle":
+                        shape = new CEquilateralTriangle();
+                        break;
+                    case "ShapeGroup":
+                        shape = new CShapeGroup();
+                        break;
+                }
+                if (shape != null)
+                {
+                    shape.Load(fileLinesQueue);
+                    shapeGroup.Append(shape);
+                }
+                else
+                {
+                    throw new Exception("Save file is corrupted");
+                }
             }
             
         }
