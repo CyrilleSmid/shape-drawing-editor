@@ -307,6 +307,7 @@ namespace oop_lab6_8.ViewModels
         public void Load()
         {
             ShapeContainer = new SerializableShapeContainer();
+            history = new Stack<CShapeCommand>();
             ShapeContainer.LoadShapes();
         }
     }
