@@ -156,13 +156,16 @@ namespace oop_lab6_8.Models
             Selected = true;
             ShapeContainer.Append(this);
         }
-        public void UngroupShapes(Container<CShape> shapeContainer)
+        public List<CShape> UngroupShapes(Container<CShape> shapeContainer)
         {
+            List<CShape> ungroupedShapes = new List<CShape>();
             for (shapeGroup.First();
                  shapeGroup.IsEOL() == false;
                  shapeGroup.Next())
             {
                 shapeContainer.Append(shapeGroup.GetCurrent());
+                ungroupedShapes.Add(shapeGroup.GetCurrent());
+                shapeGroup.DeleteCurrent();
             }
             shapeContainer.SaveIterationState();
             for (shapeContainer.First();
@@ -175,7 +178,7 @@ namespace oop_lab6_8.Models
                 }
             }
             shapeContainer.RevertToSavedIterationState(true);
-            
+            return ungroupedShapes;
         }
         public override void Save(List<string> fileLines)
         {

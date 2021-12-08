@@ -11,6 +11,7 @@ namespace oop_lab6_8.ShapeCommands
     {
         CShapeGroup receiver;
         Container<CShape> shapeContainer;
+        List<CShape> ungroupedShapes = new List<CShape>();
         public UngroupShapeCommand(Container<CShape> shapeContainer)
         {
             this.shapeContainer = shapeContainer;
@@ -26,7 +27,7 @@ namespace oop_lab6_8.ShapeCommands
             if (shapeGroup.GetType() == typeof(CShapeGroup))
             {
                 receiver = (CShapeGroup)shapeGroup;
-                receiver.UngroupShapes(shapeContainer);
+                ungroupedShapes = receiver.UngroupShapes(shapeContainer);
             }
         }
 
@@ -38,9 +39,15 @@ namespace oop_lab6_8.ShapeCommands
                      shapeContainer.IsEOL() == false;
                      shapeContainer.Next())
                 {
-                    shapeContainer.GetCurrent().Selected = false;
+                    if(ungroupedShapes.Contains(shapeContainer.GetCurrent()))
+                    {
+                        shapeContainer.GetCurrent().Selected = true;
+                    }
+                    else
+                    {
+                        shapeContainer.GetCurrent().Selected = false;
+                    }
                 }
-                receiver.Selected = true;
                 receiver.GroupSelectedShapes(shapeContainer);
             }
         }

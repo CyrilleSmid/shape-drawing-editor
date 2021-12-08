@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:oop_lab6_8"
         mc:Ignorable="d" 
-        Height="800" Width="1100" MinHeight="600" MinWidth="780"
+        Height="700" Width="1100" MinHeight="600" MinWidth="780"
         KeyDown="Window_KeyDown" Loaded="Window_Loaded" 
         MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave">
     <Grid>
@@ -73,13 +73,10 @@
                         Click="Load_Click"/>
                 </Grid>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
-                    - Use arrows or mouse to move shapes
-                </TextBlock>
-                <TextBlock TextWrapping="Wrap" FontSize="16">
                     - Hold Left Ctrl to select multiple shapes
                 </TextBlock>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
-                    - Hold Left Shift to move selected shapes
+                    - Use arrows or mouse with Left Shift to move selected shapes
                 </TextBlock>
                 <TextBlock TextWrapping="Wrap" FontSize="16">
                     - Press Ctrl + Z to undo
