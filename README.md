@@ -1,1 +1,2 @@
-# oop-lab6
+# Shape drawing editor
+This project delves into the concepts and techniques of object-oriented programming. This editor enables you to manipulate and modify various shapes by adjusting their color, size, and opacity. The application also features an undo/redo function, allowing you to easily revert any changes made to the shapes. This project can help to gain a deeper understanding of object-oriented development principles and patterns.
